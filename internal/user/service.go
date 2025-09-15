@@ -29,7 +29,7 @@ func (s *service) Create(ctx context.Context, in CreateUserInput) (*User, error)
 	if err := s.validator.Struct(in); err != nil {
 		return nil, err
 	}
-	u := &User{Name: in.Name, Email: in.Emal}
+	u := &User{Name: in.Name, Email: in.Email}
 	if err := s.repo.Create(ctx, u); err != nil {
 		return nil, err
 	}

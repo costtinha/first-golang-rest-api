@@ -15,10 +15,22 @@ func Connect(cfg *appcfg.Config, lg *applg.Logger) (*gorm.DB, error) {
 	gormCfg := &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Warn),
 	}
-	db, err := gorm.Open(postgres.Open(cfg.DSN()), gormCfg)
+	var db *gorm.DB
+	var err error
+	retries := 5
+
+	for i := 0; i < retries; i++ {
+		db, err = gorm.Open(postgres.Open(cfg.DSN()), gormCfg)
+		if err == nil {
+			break
+		}
+		lg.Warnf("Failed to connect to database, retrying (%d,%d): %v", i+1, retries, err)
+		time.Sleep(2 * time.Second)
+
+	}
 
 	if err != nil {
-		lg.Errorf("failed to open database: %v", err)
+		lg.Errorf("failed to connect to database after %d retries: %v", retries, err)
 		return nil, err
 	}
 

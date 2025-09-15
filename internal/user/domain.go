@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -14,7 +15,7 @@ type User struct {
 	UpdatedAt time.Time
 }
 
-func (u *User) BeforeCreated(_ any) error {
+func (u *User) BeforeCreate(*gorm.DB) error {
 	if u.ID == uuid.Nil {
 		u.ID = uuid.New()
 	}
@@ -22,8 +23,8 @@ func (u *User) BeforeCreated(_ any) error {
 }
 
 type CreateUserInput struct {
-	Name string `json:"name" validate:"required,min=2,max=120"`
-	Emal string `json:"email" validate:"required,email,max=180"`
+	Name  string `json:"name" validate:"required,min=2,max=120"`
+	Email string `json:"email" validate:"required,email,max=180"`
 }
 
 type UpdateUserInput struct {
