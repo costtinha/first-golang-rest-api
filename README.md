@@ -17,7 +17,6 @@ O foco é em arquitetura limpa e escalável para um backend básico, ideal para 
 - [Exemplos de Requisições](#-exemplos-de-requisições)
 - [Estrutura do Projeto](#-estrutura-do-projeto)
 - [Decisões & Aprendizados](#-decisões--aprendizados)
-- [Documentação Swagger](#-documentação-swagger)
 - [Licença](#-licença)
 
 ---
